@@ -1,4 +1,5 @@
 const express = require('express');
+const Vigenere = require('caesar-salad').Vigenere;
 
 const app = express();
 const port = 8000;
@@ -6,13 +7,21 @@ const port = 8000;
 const password = 'madrid';
 
 app.get('/:text', (req, res) => {
-    res.send(req.params.text);
+    res.send(`<h1>${req.params.text}</h1>`);
+});
+
+app.get('/encode/:text', (req, res) => {
+    const encodeText = req.params.text;
+    const decodeText = Vigenere.Decipher(password).crypt(encodeText);
+    res.send(`<h1>${decodeText}</h1>`);
+});
+
+app.get('/decode/:text', (req, res) => {
+    const decodeText = req.params.text;
+    const encodeText = Vigenere.Cipher(password).crypt(decodeText);
+    res.send(`<h1>${encodeText}</h1>`);
 });
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
-
-app.get('/encode/:text', (req, res) => {
-    const encodeText = req.params.text;
-})
