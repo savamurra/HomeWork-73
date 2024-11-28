@@ -7,19 +7,20 @@ const port = 8000;
 const password = 'madrid';
 
 app.get('/:text', (req, res) => {
-    res.send(`<h1>${req.params.text}</h1>`);
+    return res.send(`<h1>${req.params.text}</h1>`);
 });
 
 app.get('/encode/:text', (req, res) => {
     const encodeText = req.params.text;
     const decodeText = Vigenere.Decipher(password).crypt(encodeText);
-    res.send(`<h1>${decodeText}</h1>`);
+    return res.send(`<h1>${decodeText}</h1>`);
 });
 
 app.get('/decode/:text', (req, res) => {
     const decodeText = req.params.text;
     const encodeText = Vigenere.Cipher(password).crypt(decodeText);
-    res.send(`<h1>${encodeText}</h1>`);
+
+    return res.send(`<h1>${encodeText}</h1>`);
 });
 
 app.listen(port, () => {
